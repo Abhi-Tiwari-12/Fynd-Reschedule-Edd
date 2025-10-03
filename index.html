@@ -213,34 +213,28 @@
             const errorMessage = document.getElementById('error-message');
             const successMessage = document.getElementById('success-message');
 
-            // Reset messages
             errorMessage.style.display = 'none';
             successMessage.style.display = 'none';
             errorMessage.textContent = '';
             successMessage.textContent = '';
 
-            // Basic client-side validation
             if (!username || !password) {
                 errorMessage.textContent = 'Please fill in all fields';
                 errorMessage.style.display = 'block';
                 return;
             }
 
-            // Validate password length
             if (password.length < 6) {
                 errorMessage.textContent = 'Password must be at least 6 characters';
                 errorMessage.style.display = 'block';
                 return;
             }
 
-            // Show loading state
             loginBtn.disabled = true;
             loginBtn.innerHTML = '<span class="loader"></span> Logging in...';
 
-            // Simulate API call delay
             await new Promise(resolve => setTimeout(resolve, 1000));
 
-            // Check credentials
             if (username === VALID_CREDENTIALS.username && password === VALID_CREDENTIALS.password) {
                 successMessage.textContent = 'Login successful! Redirecting...';
                 successMessage.style.display = 'block';
@@ -252,7 +246,6 @@
                 errorMessage.style.display = 'block';
             }
 
-            // Reset button state
             loginBtn.disabled = false;
             loginBtn.innerHTML = 'Login';
         }
