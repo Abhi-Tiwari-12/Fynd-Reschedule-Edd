@@ -1,0 +1,9 @@
+# netlify.toml
+[build]
+  publish = "."
+
+# Redirect root URL to login.html
+[[redirects]]
+  from = "/"
+  to = "/login.html"
+  status = 200
