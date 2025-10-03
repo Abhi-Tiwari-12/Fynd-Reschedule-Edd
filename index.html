@@ -786,7 +786,7 @@ body {
 <body>
     <div class="header">
         <div class="brand">Fynd<>TSC</div>
-        <button class="logout-btn" onclick="window.location.href = 'login.html';">Logout</button>
+        <button class="logout-btn" onclick="handleLogout()">Logout</button>
     </div>
     <div class="dashboard-container">
         <h2>Search Orders</h2>
@@ -854,6 +854,11 @@ body {
     </div>
 
     <script>
+        // Authentication check: Redirect to login if not logged in
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+
         let currentOrderId = null;
         let currentDeliveryDate = null;
         let currentProductName = null;
@@ -1230,6 +1235,12 @@ body {
             const errorMessage = document.getElementById('error-message');
             errorMessage.textContent = 'Order ID search is not implemented yet (API not provided)';
             errorMessage.style.display = 'block';
+        }
+
+        // Logout handler: Clear session and redirect
+        function handleLogout() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'login.html';
         }
 
         renderCalendar();
