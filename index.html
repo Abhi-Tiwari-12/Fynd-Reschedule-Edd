@@ -18,7 +18,7 @@
             align-items: center;
             min-height: 100vh;
             background: linear-gradient(135deg, #4b6cb7, #182848);
-            overflow: hidden;
+            overflow: auto; /* Allow scrolling if content overflows on small screens */
         }
 
         .header {
@@ -47,7 +47,7 @@
             width: 100%;
             max-width: 450px;
             text-align: center;
-            margin-top: 100px;
+            margin: 80px auto 40px; /* Centered horizontally with auto, vertical margin for header clearance */
             animation: fadeIn 0.5s ease-in-out;
         }
 
@@ -168,7 +168,6 @@
         @media (max-width: 768px) {
             body {
                 padding: 10px;
-                overflow: auto; /* Allow scrolling if needed */
             }
 
             .header {
@@ -182,7 +181,7 @@
 
             .login-container {
                 padding: 24px;
-                margin-top: 80px;
+                margin: 60px auto 20px;
                 max-width: 90%;
                 border-radius: 8px;
                 box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
@@ -235,8 +234,7 @@
         @media (max-width: 480px) {
             body {
                 padding: 5px;
-                align-items: flex-start; /* Adjust for smaller screens to avoid overflow */
-                min-height: 100vh;
+                align-items: center; /* Keep centered on very small screens */
             }
 
             .header {
@@ -250,7 +248,7 @@
 
             .login-container {
                 padding: 20px;
-                margin: 60px 10px 20px;
+                margin: 50px auto 20px; /* Reduced top margin for better centering below header */
                 max-width: 95%;
                 border-radius: 6px;
                 box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
