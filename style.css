@@ -1,0 +1,817 @@
+     * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     }
+
+     body {
+         display: flex;
+         justify-content: center;
+         align-items: flex-start;
+         min-height: 100vh;
+         background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+         padding: 20px;
+         overflow: auto;
+     }
+
+     .header {
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         padding: 15px 40px;
+         background: #ffffff;
+         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+         z-index: 1000;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+     }
+
+     .header .brand {
+         font-size: 26px;
+         font-weight: 700;
+         color: #243b55;
+         letter-spacing: 0.5px;
+     }
+
+     .header .logout-btn {
+         padding: 8px 16px;
+         background: #4b6cb7;
+         color: #ffffff;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         font-weight: 500;
+         transition: background 0.3s, transform 0.2s;
+     }
+
+     .header .logout-btn:hover {
+         background: #182848;
+         transform: translateY(-1px);
+     }
+
+     .dashboard-container {
+         background: #ffffff;
+         padding: 40px;
+         border-radius: 12px;
+         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+         width: 100%;
+         max-width: 1200px;
+         margin-top: 80px;
+         animation: fadeIn 0.6s ease-in-out;
+     }
+
+     @keyframes fadeIn {
+         from {
+             opacity: 0;
+             transform: translateY(30px);
+         }
+
+         to {
+             opacity: 1;
+             transform: translateY(0);
+         }
+     }
+
+     .dashboard-container h2 {
+         margin-bottom: 25px;
+         color: #243b55;
+         font-size: 28px;
+         font-weight: 600;
+         text-align: left;
+     }
+
+     .search-section {
+         display: flex;
+         gap: 20px;
+         margin-bottom: 30px;
+     }
+
+     .search-group {
+         flex: 1;
+         display: flex;
+         flex-direction: column;
+     }
+
+     .input-group {
+         margin-bottom: 0;
+         text-align: left;
+         position: relative;
+     }
+
+     .input-group label {
+         display: block;
+         margin-bottom: 6px;
+         color: #333;
+         font-weight: 500;
+         font-size: 14px;
+     }
+
+     .input-group input {
+         width: 100%;
+         padding: 12px 16px;
+         border: 1px solid #ccd6e0;
+         border-radius: 6px;
+         font-size: 15px;
+         outline: none;
+         transition: border-color 0.3s, box-shadow 0.3s;
+     }
+
+     .input-group input:focus {
+         border-color: #4b6cb7;
+         box-shadow: 0 0 0 3px rgba(75, 108, 183, 0.1);
+     }
+
+     .search-btn {
+         margin-top: 24px;
+         width: 100%;
+         padding: 12px;
+         background: #4b6cb7;
+         border: none;
+         border-radius: 6px;
+         color: #ffffff;
+         font-size: 15px;
+         font-weight: 600;
+         cursor: pointer;
+         transition: background 0.3s, transform 0.2s;
+     }
+
+     .search-btn:hover {
+         background: #182848;
+         transform: translateY(-1px);
+     }
+
+     .search-btn:disabled {
+         background: #e0e0e0;
+         color: #999;
+         cursor: not-allowed;
+     }
+
+     .reschedule-btn:disabled {
+         background: #e0e0e0;
+         color: #999;
+         cursor: not-allowed;
+     }
+
+     .message {
+         margin-top: 10px;
+         font-size: 14px;
+         padding: 10px 15px;
+         border-radius: 6px;
+         display: none;
+         text-align: left;
+     }
+
+     .error-message {
+         color: #d32f2f;
+         background: #ffebee;
+         border: 1px solid #ef9a9a;
+     }
+
+     .success-message {
+         color: #388e3c;
+         background: #e8f5e9;
+         border: 1px solid #a5d6a7;
+         margin-bottom: 10px;
+     }
+
+     .loader {
+         border: 3px solid #f3f3f3;
+         border-top: 3px solid #4b6cb7;
+         border-radius: 50%;
+         width: 20px;
+         height: 20px;
+         animation: spin 0.8s linear infinite;
+         display: inline-block;
+         margin-right: 8px;
+         vertical-align: middle;
+     }
+
+     .loader-modal {
+         display: none;
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background: rgba(0, 0, 0, 0.5);
+         z-index: 2500;
+         justify-content: center;
+         align-items: center;
+     }
+
+     .loader-content {
+         background: #ffffff;
+         padding: 20px;
+         border-radius: 8px;
+         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+         text-align: center;
+     }
+
+     .loader-content .loader {
+         width: 40px;
+         height: 40px;
+         border-width: 4px;
+         margin: 0 auto 10px;
+     }
+
+     .loader-content p {
+         color: #243b55;
+         font-size: 16px;
+         font-weight: 500;
+     }
+
+     .reschedule-confirmation-overlay {
+         display: none;
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background: rgba(0, 0, 0, 0.5);
+         z-index: 2000;
+         justify-content: center;
+         align-items: center;
+     }
+
+     .reschedule-confirmation-modal {
+         background: #ffffff;
+         padding: 24px;
+         border-radius: 8px;
+         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+         width: 100%;
+         max-width: 400px;
+         text-align: center;
+         animation: slideIn 0.3s ease-in-out;
+     }
+
+     .reschedule-confirmation-modal h3 {
+         color: #243b55;
+         font-size: 18px;
+         font-weight: 600;
+         margin-bottom: 16px;
+     }
+
+     .reschedule-confirmation-modal p {
+         color: #333;
+         font-size: 14px;
+         margin-bottom: 20px;
+     }
+
+     .reschedule-confirmation-buttons {
+         display: flex;
+         gap: 12px;
+         justify-content: center;
+     }
+
+     .reschedule-confirmation-buttons button {
+         padding: 10px 20px;
+         border: none;
+         border-radius: 4px;
+         font-size: 14px;
+         font-weight: 500;
+         cursor: pointer;
+         transition: background 0.3s, transform 0.2s;
+     }
+
+     .reschedule-confirmation-buttons .yes-btn {
+         background: #4b6cb7;
+         color: #ffffff;
+     }
+
+     .reschedule-confirmation-buttons .yes-btn:hover {
+         background: #182848;
+         transform: translateY(-1px);
+     }
+
+     .reschedule-confirmation-buttons .no-btn {
+         background: #e0e0e0;
+         color: #333;
+     }
+
+     .reschedule-confirmation-buttons .no-btn:hover {
+         background: #d1d9e0;
+         transform: translateY(-1px);
+     }
+
+     @keyframes spin {
+         0% {
+             transform: rotate(0deg);
+         }
+
+         100% {
+             transform: rotate(360deg);
+         }
+     }
+
+     .results-table {
+         width: 100%;
+         border-collapse: separate;
+         border-spacing: 0;
+         margin-top: 20px;
+         font-size: 14px;
+         border-radius: 10px;
+         overflow: hidden;
+         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+         background: #ffffff;
+         border: 1px solid #e0e6ed;
+     }
+
+     .results-table th,
+     .results-table td {
+         padding: 16px 20px;
+         text-align: left;
+         border-bottom: 1px solid #e0e6ed;
+         border-right: 1px solid #e0e6ed;
+     }
+
+     .results-table th:last-child,
+     .results-table td:last-child {
+         border-right: none;
+     }
+
+     .results-table th {
+         background: #4b6cb7;
+         color: #ffffff;
+         font-weight: 700;
+         font-size: 13px;
+         text-transform: uppercase;
+         position: sticky;
+         top: 0;
+         z-index: 10;
+         letter-spacing: 0.5px;
+     }
+
+     .results-table tr:last-child td {
+         border-bottom: none;
+     }
+
+     .results-table tr:nth-child(even) {
+         background: #f8fafc;
+     }
+
+     .results-table tr:hover {
+         background: #e8f5e9;
+         transition: background 0.3s ease;
+     }
+
+     .results-table td {
+         color: #2d3748;
+         font-size: 14px;
+         font-weight: 500;
+         transition: color 0.3s ease;
+     }
+
+     .results-table tr:hover td {
+         color: #1a202c;
+     }
+
+     .reschedule-btn {
+         padding: 8px 16px;
+         background: #4b6cb7;
+         color: #ffffff;
+         border: none;
+         border-radius: 6px;
+         cursor: pointer;
+         font-size: 13px;
+         font-weight: 600;
+         transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     }
+
+     .reschedule-btn:hover {
+         background: #182848;
+         transform: translateY(-2px);
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+     }
+
+     .modal-overlay,
+     .confirmation-modal-overlay {
+         display: none;
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background: rgba(0, 0, 0, 0.5);
+         z-index: 2000;
+         justify-content: center;
+         align-items: center;
+     }
+
+     .modal,
+     .confirmation-modal {
+         background: #ffffff;
+         padding: 24px;
+         border-radius: 8px;
+         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+         width: 100%;
+         max-width: 400px;
+         text-align: center;
+         animation: slideIn 0.3s ease-in-out;
+     }
+
+     .confirmation-modal-success {
+         border: 4px solid #388e3c;
+     }
+
+     .confirmation-modal-error {
+         border: 4px solid #d32f2f;
+     }
+
+     .confirmation-icon {
+         font-size: 32px;
+         margin-bottom: 10px;
+     }
+
+     .confirmation-icon.success {
+         color: #388e3c;
+     }
+
+     .confirmation-icon.error {
+         color: #d32f2f;
+     }
+
+     @keyframes slideIn {
+         from {
+             opacity: 0;
+             transform: translateY(-20px);
+         }
+
+         to {
+             opacity: 1;
+             transform: translateY(0);
+         }
+     }
+
+     .modal h3,
+     .confirmation-modal h3 {
+         color: #243b55;
+         font-size: 20px;
+         font-weight: 600;
+         margin-bottom: 20px;
+     }
+
+     .calendar {
+         margin: 20px 0;
+     }
+
+     .calendar-header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         margin-bottom: 16px;
+     }
+
+     .calendar-header button {
+         background: none;
+         border: none;
+         font-size: 16px;
+         cursor: pointer;
+         color: #4b6cb7;
+         transition: color 0.3s;
+     }
+
+     .calendar-header button:hover {
+         color: #182848;
+     }
+
+     .calendar-header span {
+         font-size: 16px;
+         font-weight: 500;
+         color: #243b55;
+     }
+
+     .calendar-grid {
+         display: grid;
+         grid-template-columns: repeat(7, 1fr);
+         gap: 4px;
+         text-align: center;
+         min-height: 200px;
+     }
+
+     .calendar-grid div {
+         padding: 10px;
+         font-size: 14px;
+         color: #333;
+         min-width: 40px;
+         box-sizing: border-box;
+     }
+
+     .calendar-grid .day-header {
+         font-weight: 600;
+         color: #243b55;
+         font-size: 12px;
+     }
+
+     .calendar-grid .day {
+         cursor: pointer;
+         border-radius: 4px;
+         transition: background 0.2s, color 0.2s;
+     }
+
+     .calendar-grid .day:hover:not(.disabled) {
+         background: #e8f5e9;
+     }
+
+     .calendar-grid .day.selected {
+         background: #4b6cb7;
+         color: #ffffff;
+     }
+
+     .calendar-grid .day.disabled {
+         color: #999;
+         cursor: not-allowed;
+         background: transparent;
+     }
+
+     .modal-buttons {
+         display: flex;
+         gap: 12px;
+         justify-content: center;
+     }
+
+     .modal-buttons button,
+     .confirmation-modal button {
+         padding: 10px 20px;
+         border: none;
+         border-radius: 4px;
+         font-size: 14px;
+         font-weight: 500;
+         cursor: pointer;
+         transition: background 0.3s, transform 0.2s;
+     }
+
+     .modal-buttons .confirm-btn {
+         background: #4b6cb7;
+         color: #ffffff;
+     }
+
+     .modal-buttons .confirm-btn:hover {
+         background: #182848;
+         transform: translateY(-1px);
+     }
+
+     .modal-buttons .cancel-btn {
+         background: #e0e0e0;
+         color: #333;
+     }
+
+     .modal-buttons .cancel-btn:hover {
+         background: #d1d9e0;
+         transform: translateY(-1px);
+     }
+
+     .confirmation-modal .ok-btn {
+         background: #4b6cb7;
+         color: #ffffff;
+     }
+
+     .confirmation-modal .ok-btn:hover {
+         background: #182848;
+         transform: translateY(-1px);
+     }
+
+     .confirmation-details {
+         font-size: 14px;
+         color: #333;
+         margin-bottom: 20px;
+         text-align: left;
+     }
+
+     .confirmation-details p {
+         margin: 8px 0;
+     }
+
+     @media (max-width: 768px) {
+         .header {
+             padding: 12px 20px;
+         }
+
+         .header .brand {
+             font-size: 22px;
+         }
+
+         .header .logout-btn {
+             padding: 6px 12px;
+             font-size: 14px;
+         }
+
+         .dashboard-container {
+             padding: 20px;
+             margin-top: 60px;
+             border-radius: 8px;
+         }
+
+         .dashboard-container h2 {
+             font-size: 24px;
+             margin-bottom: 20px;
+         }
+
+         .search-section {
+             flex-direction: column;
+             gap: 12px;
+         }
+
+         .input-group input {
+             padding: 10px 14px;
+             font-size: 14px;
+         }
+
+         .search-btn {
+             margin-top: 16px;
+             padding: 10px;
+             font-size: 14px;
+         }
+
+         .results-table {
+             display: block;
+             overflow-x: auto;
+             white-space: nowrap;
+             border-radius: 8px;
+         }
+
+         .results-table th,
+         .results-table td {
+             min-width: 100px;
+             font-size: 13px;
+             padding: 12px 14px;
+         }
+
+         .reschedule-btn {
+             font-size: 12px;
+             padding: 6px 12px;
+             min-width: 100px;
+             border-radius: 5px;
+         }
+
+         .modal,
+         .confirmation-modal,
+         .loader-content,
+         .reschedule-confirmation-modal {
+             max-width: 90%;
+             padding: 16px;
+             border-radius: 6px;
+         }
+
+         .modal h3,
+         .confirmation-modal h3,
+         .reschedule-confirmation-modal h3 {
+             font-size: 18px;
+             margin-bottom: 16px;
+         }
+
+         .calendar-grid {
+             gap: 2px;
+             min-height: 180px;
+         }
+
+         .calendar-grid div {
+             padding: 8px;
+             font-size: 12px;
+             min-width: 36px;
+         }
+
+         .calendar-header button {
+             font-size: 14px;
+         }
+
+         .calendar-header span {
+             font-size: 14px;
+         }
+
+         .modal-buttons button,
+         .confirmation-modal button,
+         .reschedule-confirmation-buttons button {
+             padding: 8px 16px;
+             font-size: 13px;
+             min-width: 100px;
+         }
+
+         .confirmation-details p {
+             font-size: 13px;
+             margin: 6px 0;
+         }
+
+         .loader-content p {
+             font-size: 14px;
+         }
+     }
+
+     @media (max-width: 480px) {
+         .header {
+             padding: 10px 16px;
+         }
+
+         .header .brand {
+             font-size: 20px;
+         }
+
+         .header .logout-btn {
+             padding: 5px 10px;
+             font-size: 13px;
+         }
+
+         .dashboard-container {
+             padding: 16px;
+             margin-top: 50px;
+             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+         }
+
+         .dashboard-container h2 {
+             font-size: 20px;
+             margin-bottom: 16px;
+         }
+
+         .input-group label {
+             font-size: 13px;
+         }
+
+         .input-group input {
+             padding: 8px 12px;
+             font-size: 13px;
+         }
+
+         .search-btn {
+             padding: 8px;
+             font-size: 13px;
+             margin-top: 12px;
+         }
+
+         .message {
+             font-size: 13px;
+             padding: 8px 12px;
+         }
+
+         .results-table th,
+         .results-table td {
+             min-width: 90px;
+             font-size: 12px;
+             padding: 10px 12px;
+         }
+
+         .reschedule-btn {
+             font-size: 11px;
+             padding: 5px 10px;
+             min-width: 80px;
+         }
+
+         .modal,
+         .confirmation-modal,
+         .loader-content,
+         .reschedule-confirmation-modal {
+             max-width: 95%;
+             padding: 12px;
+         }
+
+         .modal h3,
+         .confirmation-modal h3,
+         .reschedule-confirmation-modal h3 {
+             font-size: 16px;
+             margin-bottom: 12px;
+         }
+
+         .calendar-grid {
+             gap: 1px;
+             min-height: 160px;
+         }
+
+         .calendar-grid div {
+             padding: 6px;
+             font-size: 11px;
+             min-width: 32px;
+         }
+
+         .calendar-header button {
+             font-size: 13px;
+         }
+
+         .calendar-header span {
+             font-size: 13px;
+         }
+
+         .modal-buttons button,
+         .confirmation-modal button,
+         .reschedule-confirmation-buttons button {
+             padding: 6px 12px;
+             font-size: 12px;
+             min-width: 80px;
+         }
+
+         .confirmation-details p {
+             font-size: 12px;
+             margin: 5px 0;
+         }
+
+         .loader-content .loader {
+             width: 32px;
+             height: 32px;
+             border-width: 3px;
+         }
+
+         .loader-content p {
+             font-size: 13px;
+         }
+     }
